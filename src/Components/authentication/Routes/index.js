@@ -9,6 +9,7 @@ import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "../PrivateRoute";
 import UpdateProfile from "../UpdateProfile";
 import Home from "../Home"
+import Sale from '../../Sell'
 
 
 export default function Routes() {
@@ -19,7 +20,8 @@ export default function Routes() {
       
         <Switch>
           {/* Drive */}
-          <Route exact path="/" component={Home} />
+          {/* <Route exact path="/" component={Home} /> */}
+          <Route exact path="/" component={Sale} />
         
 
           {/* Profile */}
