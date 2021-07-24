@@ -3,7 +3,11 @@ import React from 'react'
 export default function index() {
     return (
         <div>
-            Home
+           <h1>
+               Homes
+
+               </h1> 
+               
         </div>
     )
 }
