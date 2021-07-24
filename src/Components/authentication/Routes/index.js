@@ -9,7 +9,7 @@ import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "../PrivateRoute";
 import UpdateProfile from "../UpdateProfile";
 import Home from "../Home"
-import Sale from '../../Sell'
+import Sale from '../../Sale/Sales'
 
 
 export default function Routes() {
