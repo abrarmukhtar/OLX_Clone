@@ -1,29 +1,43 @@
 import React from 'react';
-// import Table from '@material-ui/core/Table';
-// import TableBody from '@material-ui/core/TableBody';
-// import TableCell from '@material-ui/core/TableCell';
-// import TableContainer from '@material-ui/core/TableContainer';
-// import TableHead from '@material-ui/core/TableHead';
-// import TableRow from '@material-ui/core/TableRow';
-// import Paper from '@material-ui/core/Paper';
-// import {useStyles} from './style'
-
+import Grid from "@material-ui/core/Grid";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import Typography from "@material-ui/core/Typography";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
+import Link from "@material-ui/core/Link";
+import { useStyles } from "./style";
 
 
 
 
 export default function SubCategory({ row}) {
-  
-  
+  const classes = useStyles();
   return (
-  
     <>
-      <a
-        href="#"
-       style={{textDecoration: "none", color: "black" }}
-      >
-        { row}
-      </a>
+
+<Link href="#" style={{ textDecoration: "none", color: "black" }} >
+      
+      <Grid container spacinig={0}>
+        <Grid item xs={12} sm={1}>
+          <PhoneAndroidIcon />
+        </Grid>
+        <Grid item xs={12} sm={10}>
+          <Typography className={classes.heading}>
+          { row}
+            
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={1}>
+          <AccordionSummary 
+            expandIcon={<ArrowForwardIosIcon  />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          ></AccordionSummary>
+        </Grid>
+      </Grid>
+  
+    </Link>      
+   
      
     </>
   );

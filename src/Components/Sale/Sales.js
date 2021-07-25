@@ -11,10 +11,8 @@ import Category from "./Category";
 import SubCategory from "./SubCategory";
 import { UseStyles } from "./style";
 import { database } from "../../firebase";
+import SalesCenteredContainer from './SalesCenteredContainer' 
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
 const rows = ["Mobiles", "Vehicles"];
 
 export default function Sales() {
@@ -30,7 +28,7 @@ export default function Sales() {
 
   const classes = UseStyles();
   return (
-    <>
+    <SalesCenteredContainer>
       <div className={classes.root}>
         <Grid container spacing={0}>
           <Grid item xs={12}>
@@ -38,8 +36,8 @@ export default function Sales() {
               POST YOUR AD
             </Typography>
             <TableContainer>
-              <Table className={classes.table} aria-label="simple table">
-                <TableHead>
+              <Table className={classes.table}  aria-label="simple table">
+                <TableHead className={classes.tblHeading}>
                   <TableRow>
                     <TableCell>CHOOSE A CATEGORY</TableCell>
                   </TableRow>
@@ -49,18 +47,17 @@ export default function Sales() {
           </Grid>
           {/* this is left side of table (Categories) */}
           <Grid item xs={6}>
-            <TableContainer>
+            <TableContainer className={classes.tblContainer}>
               {cate.length > 0 &&
                 cate.map((row, index) => (
                   <Table
                     className={classes.table}
                     key={row.id}
-                    aria-label="simple table"
                   >
-                    <TableBody>
+                    <TableBody className={classes.tblRow} >
                       {
-                        <TableRow>
-                          <TableCell align="left">
+                        <TableRow  >
+                          <TableCell align="left" >
                             <Category category={row} />
                           </TableCell>
                         </TableRow>
@@ -72,7 +69,7 @@ export default function Sales() {
           </Grid>
           {/* this is left side of table (SubCategories) */}
           <Grid item xs={6}>
-            <TableContainer>
+            <TableContainer  className={classes.tblContainer}>
               {rows.length > 0 &&
                 rows.map((row, index) => (
                   <Table
@@ -80,7 +77,7 @@ export default function Sales() {
                     key={index}
                     aria-label="simple table"
                   >
-                    <TableBody>
+                    <TableBody className={classes.tblRow}>
                       {
                         <TableRow>
                           <TableCell align="left">
@@ -95,6 +92,6 @@ export default function Sales() {
           </Grid>
         </Grid>
       </div>
-    </>
+    </SalesCenteredContainer>
   );
 }
