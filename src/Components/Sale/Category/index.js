@@ -1,45 +1,41 @@
-import React, { useState, useReducer, useEffect } from "react";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
+import React from "react";
+import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import Typography from "@material-ui/core/Typography";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
+import Link from "@material-ui/core/Link";
 import { useStyles } from "./style";
-import { database } from "../../../firebase";
-import { Link } from "@material-ui/core";
-// import { useAuth } from "../contexts/AuthContext";
 
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
-// }
-
-// const rows = [
-//   createData('Mobiles'),
-//   createData('Vehicles'),
-//   createData('Property for Sale'),
-//   createData('Property for Rent'),
-//   createData('Electronics & Home Appliances'),
-// ];
-
-
-
-export default function BasicTable({category}) {
-
+export default function Category({ category }) {
+  // export default function SimpleAccordion() {
   const classes = useStyles();
-
-
-
   return (
     <>
-      <a
-        href="#"
-       style={{textDecoration: "none", color: "black" }}
-      >
-        { `From firestore: ${category.name} `}
-      </a>
-     
+    <Link href="#" style={{ textDecoration: "none", color: "black" }} >
+      <div>
+        <Grid container spacinig={0}>
+          <Grid item xs={12} sm={1}>
+            <PhoneAndroidIcon />
+          </Grid>
+          <Grid item xs={12} sm={10}>
+            <Typography className={classes.heading}>
+              
+                {category.name} 
+              
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={1}>
+            <AccordionSummary
+              expandIcon={<ArrowForwardIosIcon />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            ></AccordionSummary>
+          </Grid>
+        </Grid>
+      </div>  
+      </Link>      
     </>
   );
 }

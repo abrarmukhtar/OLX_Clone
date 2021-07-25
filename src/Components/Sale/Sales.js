@@ -1,5 +1,4 @@
 import React, { useState, useReducer, useEffect } from "react";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Table from "@material-ui/core/Table";
@@ -16,6 +15,7 @@ import { database } from "../../firebase";
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
+const rows = ["Mobiles", "Vehicles"];
 
 export default function Sales() {
   const [cate, setCate] = useState([]);
@@ -49,32 +49,49 @@ export default function Sales() {
           </Grid>
           {/* this is left side of table (Categories) */}
           <Grid item xs={6}>
-            <Paper className={classes.paper}>
-              <TableContainer>
-                    {cate.length > 0 &&
+            <TableContainer>
+              {cate.length > 0 &&
                 cate.map((row, index) => (
-                <Table className={classes.table} key={row.id}  aria-label="simple table">
-                  <TableBody>
-                    {
-                      <TableRow>
-                        <TableCell align="left">
-                              <Category category={row} />
-                        </TableCell>
-                      </TableRow>
-                    }
-                  </TableBody>
-                </Table>
-                            ))}
-              </TableContainer>
-            </Paper>
+                  <Table
+                    className={classes.table}
+                    key={row.id}
+                    aria-label="simple table"
+                  >
+                    <TableBody>
+                      {
+                        <TableRow>
+                          <TableCell align="left">
+                            <Category category={row} />
+                          </TableCell>
+                        </TableRow>
+                      }
+                    </TableBody>
+                  </Table>
+                ))}
+            </TableContainer>
           </Grid>
-
-                      {/* this is left side of table (SubCategories) */}
-
+          {/* this is left side of table (SubCategories) */}
           <Grid item xs={6}>
-            <Paper className={classes.paper}>
-              <SubCategory />
-            </Paper>
+            <TableContainer>
+              {rows.length > 0 &&
+                rows.map((row, index) => (
+                  <Table
+                    className={classes.table}
+                    key={index}
+                    aria-label="simple table"
+                  >
+                    <TableBody>
+                      {
+                        <TableRow>
+                          <TableCell align="left">
+                            <SubCategory row={row} />
+                          </TableCell>
+                        </TableRow>
+                      }
+                    </TableBody>
+                  </Table>
+                ))}
+            </TableContainer>
           </Grid>
         </Grid>
       </div>
