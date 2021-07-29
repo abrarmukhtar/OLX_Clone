@@ -11,20 +11,34 @@ import Category from "./Category";
 import SubCategory from "./SubCategory";
 import { UseStyles } from "./style";
 import { database } from "../../firebase";
-import SalesCenteredContainer from './SalesCenteredContainer' 
+import SalesCenteredContainer from "./SalesCenteredContainer";
+
+
 
 const rows = ["Mobiles", "Vehicles"];
 
 export default function Sales() {
   const [cate, setCate] = useState([]);
+  const [subCate, setSubCate] = useState([]);
 
   useEffect(() => {
-    return database.category.onSnapshot((snapshot) => {
-      setCate(snapshot.docs.map(database.formatDoc));
+    database.category.onSnapshot((cateSnap) => {
+      //This is categories query
+
+      setCate(cateSnap.docs.map(database.formatDoc));
+
+      cateSnap.docs.map((catDoc) => {
+        database.category
+          .doc(catDoc.id)
+          .collection("PostSubTypes")
+          .onSnapshot((snp) => {
+            setSubCate(snp.docs.map(database.formatDoc));
+          });
+      });
     });
   }, []);
 
-  cate.length > 0 && console.log(cate);
+  
 
   const classes = UseStyles();
   return (
@@ -36,7 +50,7 @@ export default function Sales() {
               POST YOUR AD
             </Typography>
             <TableContainer>
-              <Table className={classes.table}  aria-label="simple table">
+              <Table className={classes.table} aria-label="simple table">
                 <TableHead className={classes.tblHeading}>
                   <TableRow>
                     <TableCell>CHOOSE A CATEGORY</TableCell>
@@ -50,14 +64,11 @@ export default function Sales() {
             <TableContainer className={classes.tblContainer}>
               {cate.length > 0 &&
                 cate.map((row, index) => (
-                  <Table
-                    className={classes.table}
-                    key={row.id}
-                  >
-                    <TableBody className={classes.tblRow} >
+                  <Table className={classes.table} key={row.id}>
+                    <TableBody className={classes.tblRow}>
                       {
-                        <TableRow  >
-                          <TableCell align="left" >
+                        <TableRow>
+                          <TableCell align="left">
                             <Category category={row} />
                           </TableCell>
                         </TableRow>
@@ -69,7 +80,7 @@ export default function Sales() {
           </Grid>
           {/* this is left side of table (SubCategories) */}
           <Grid item xs={6}>
-            <TableContainer  className={classes.tblContainer}>
+            <TableContainer className={classes.tblContainer}>
               {rows.length > 0 &&
                 rows.map((row, index) => (
                   <Table
