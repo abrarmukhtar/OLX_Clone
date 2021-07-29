@@ -15,13 +15,17 @@ import SalesCenteredContainer from "./SalesCenteredContainer";
 
 
 
-const rows = ["Mobiles", "Vehicles"];
+
 
 export default function Sales() {
   const [cate, setCate] = useState([]);
   const [subCate, setSubCate] = useState([]);
 
-  useEffect(() => {
+
+  const getDataByCat = (id)=>{
+
+
+
     database.category.onSnapshot((cateSnap) => {
       //This is categories query
 
@@ -29,16 +33,41 @@ export default function Sales() {
 
       cateSnap.docs.map((catDoc) => {
         database.category
-          .doc(catDoc.id)
+          .doc(id)
           .collection("PostSubTypes")
           .onSnapshot((snp) => {
-            setSubCate(snp.docs.map(database.formatDoc));
+            
+            setSubCate([...snp.docs.map(database.formatDoc)]);
           });
       });
     });
+  }
+
+
+  useEffect(() => {
+    database.category.onSnapshot((cateSnap) => {
+      
+      
+      //This is categories query
+
+
+      setCate(cateSnap.docs.map(database.formatDoc));
+
+      // this is code for set SubCetogries 
+      // cateSnap.docs.map((catDoc) => {
+      //   database.category
+      //     .doc(catDoc.id)
+      //     .collection("PostSubTypes")
+      //     .onSnapshot((snp) => {
+            
+      //       setSubCate([...snp.docs.map(database.formatDoc)]);
+      //     });
+      // });
+    });
   }, []);
 
-  
+
+  // console.log(subCate);
 
   const classes = UseStyles();
   return (
@@ -69,7 +98,7 @@ export default function Sales() {
                       {
                         <TableRow>
                           <TableCell align="left">
-                            <Category category={row} />
+                            <Category category={row} getId ={getDataByCat}/>
                           </TableCell>
                         </TableRow>
                       }
@@ -81,8 +110,8 @@ export default function Sales() {
           {/* this is left side of table (SubCategories) */}
           <Grid item xs={6}>
             <TableContainer className={classes.tblContainer}>
-              {rows.length > 0 &&
-                rows.map((row, index) => (
+              {subCate.length > 0 &&
+                subCate.map((row, index) => (
                   <Table
                     className={classes.table}
                     key={index}

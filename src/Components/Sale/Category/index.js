@@ -7,12 +7,14 @@ import PhoneAndroidIcon from "@material-ui/icons/PhoneAndroid";
 import Link from "@material-ui/core/Link";
 import { useStyles } from "./style";
 
-export default function Category({ category }) {
+export default function Category({ category, getId }) {
   // export default function SimpleAccordion() {
   const classes = useStyles();
+
+
   return (
     <>
-    <Link href="#" style={{ textDecoration: "none", color: "black" }} >
+    <Link  onClick={()=> getId(category.id)} style={{ textDecoration: "none", color: "black", cursor: "pointer" }} >
       
         <Grid container spacinig={0}>
           <Grid item xs={12} sm={1}>
