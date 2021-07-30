@@ -4,25 +4,25 @@ import Signup from "../Signup";
 import Login from "../Login";
 import Profile from "../Profile";
 import ForgotPassword from "../ForgotPassword";
-import { useAuth } from '../../../contexts/AuthContext';
+import { AuthProvider  } from '../../../contexts/AuthContext';
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "../PrivateRoute";
 import UpdateProfile from "../UpdateProfile";
 import Home from "../Home"
 import Sale from '../../Sale/Sales'
-
+import Attributes from "../../Sale/Attributes";
 
 export default function Routes() {
   
   return (
     <>
     
-      
+    <AuthProvider>
         <Switch>
           {/* Drive */}
           {/* <Route exact path="/" component={Home} /> */}
-          <Route exact path="/" component={Sale} />
-        
+          <Route exact path="/" component={Attributes} />
+          <Route exact path="/sale" component={Sale} />
 
           {/* Profile */}
           <Route path="/user" component={Profile} />
@@ -33,7 +33,7 @@ export default function Routes() {
           <Route path="/login" component={Login} />
           <Route path="/forgot-password" component={ForgotPassword} />
         </Switch>
-
+        </AuthProvider>
       </>
   );
 }
