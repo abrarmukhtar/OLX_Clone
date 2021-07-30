@@ -18,7 +18,9 @@ export default function Category({ category, getId }) {
       
         <Grid container spacinig={0}>
           <Grid item xs={12} sm={1}>
-            <PhoneAndroidIcon />
+            {/* <PhoneAndroidIcon /> */}
+
+            <img src={category.icon} alt=" " style={{ width: "40px", height: "40px"}} />
           </Grid>
           <Grid item xs={12} sm={10}>
             <Typography className={classes.heading}>

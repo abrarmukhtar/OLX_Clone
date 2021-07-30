@@ -22,9 +22,7 @@ export default function SubCategory({ row }) {
 <Link   style={{ textDecoration: "none", color: "black", cursor: "pointer" }} >
       
       <Grid container spacinig={0}>
-        <Grid item xs={12} sm={1}>
-          <PhoneAndroidIcon />
-        </Grid>
+        
         <Grid item xs={12} sm={10}>
           <Typography className={classes.heading}>
           { row.name}
