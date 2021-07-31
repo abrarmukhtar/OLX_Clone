@@ -15,8 +15,11 @@ const app = firebase.initializeApp({
 });
 
 const firestore = app.firestore();
+
+
 export const database ={
   category: firestore.collection('PostTypes'),
+  collectGp: firestore.collectionGroup('ads'),
   formatDoc: doc =>{
     return {id:doc.id, ...doc.data()}
   } ,
