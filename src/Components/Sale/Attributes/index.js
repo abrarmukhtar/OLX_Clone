@@ -6,6 +6,7 @@ import Location from "./Location";
 import UserDetail from "./UDetail";
 import { useAuth } from "../../../contexts/AuthContext";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import Sales from "../Sales";
 
 export default function Attributes() {
   const { currentUser } = useAuth();
