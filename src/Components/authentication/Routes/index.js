@@ -19,8 +19,8 @@ export default function Routes() {
         <Switch>
           {/* Drive */}
           {/* <Route exact path="/" component={Home} /> */}
-          <Route exact path="/" component={Attributes} />
-          <Route exact path="/sale" component={Sale} />
+          <Route exact path="/" component={Sale} />
+          <Route exact path="/attributes" component={Attributes} />
 
           {/* Profile */}
           <Route path="/user" component={Profile} />

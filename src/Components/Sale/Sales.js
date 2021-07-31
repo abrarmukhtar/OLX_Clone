@@ -18,10 +18,16 @@ import { useHistory } from "react-router-dom";
 export default function Sales() {
   const [cate, setCate] = useState([]);
   const [subCate, setSubCate] = useState([]);
+
+  const [selectedCate, setSelectedCate] = useState({});
+  const [selectedSubCate, setSelectedSubCate] = useState({});
+
   const [showForm, setShowForm] = useState(false);
   const history = useHistory();
 
-  const getDataByCat = (id) => {
+  const getDataByCat = (Categ) => {
+    setSelectedCate(Categ);
+
     database.category.onSnapshot((cateSnap) => {
       //This is categories query
 
@@ -29,7 +35,7 @@ export default function Sales() {
 
       cateSnap.docs.map((catDoc) => {
         database.category
-          .doc(id)
+          .doc(Categ.id)
           .collection("PostSubTypes")
           .onSnapshot((snp) => {
             setSubCate([...snp.docs.map(database.formatDoc)]);
@@ -39,7 +45,8 @@ export default function Sales() {
   };
 
   const getSubCate = (row) => {
-    console.log(row);
+    setSelectedSubCate(row);
+    // console.log(row);
     setShowForm(true);
   };
 
@@ -93,7 +100,10 @@ export default function Sales() {
                       {
                         <TableRow>
                           <TableCell align="left">
-                            <Category category={row} getId={getDataByCat} />
+                            <Category
+                              category={row}
+                              getCategory={getDataByCat}
+                            />
                           </TableCell>
                         </TableRow>
                       }
@@ -127,7 +137,9 @@ export default function Sales() {
           </Grid>
         </Grid>
       </div>
-      {showForm && <AddPostForm />}
+      {showForm && (
+        <AddPostForm Category={selectedCate} SubCategory={selectedSubCate} />
+      )}
     </SalesCenteredContainer>
   );
 }

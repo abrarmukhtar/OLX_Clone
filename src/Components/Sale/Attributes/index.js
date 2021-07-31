@@ -9,8 +9,11 @@ import { database } from "../../../firebase";
 
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 
-export default function Attributes() {
+export default function Attributes({ Category, SubCategory }) {
   const { currentUser } = useAuth();
+
+  console.log(Category);
+  console.log(SubCategory);
 
   //this is for Details
   const initCombined = {
@@ -43,9 +46,9 @@ export default function Attributes() {
     e.preventDefault();
 
     database.category
-      .doc("CxE4WJxLQ2FFQCVBqsn4")
+      .doc(Category.id)
       .collection("PostSubTypes")
-      .doc("MobilPh")
+      .doc(SubCategory.id)
       .collection("ads")
       .add(combineDetail);
 
@@ -62,6 +65,8 @@ export default function Attributes() {
         }}
       >
         <Col xs={12}>
+          <h3> {SubCategory.name}</h3>
+          <br />
           <Row
             style={{
               padding: "10px 10px 10px 10px",
