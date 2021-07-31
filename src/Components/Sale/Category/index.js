@@ -11,33 +11,34 @@ export default function Category({ category, getId }) {
   // export default function SimpleAccordion() {
   const classes = useStyles();
 
-
   return (
     <>
-    <Link  onClick={()=> getId(category.id)} style={{ textDecoration: "none", color: "black", cursor: "pointer" }} >
-      
+      <Link
+        onClick={() => getId(category.id)}
+        style={{ textDecoration: "none", color: "black", cursor: "pointer" }}
+      >
         <Grid container spacinig={0}>
           <Grid item xs={12} sm={1}>
             {/* <PhoneAndroidIcon /> */}
 
-            <img src={category.icon} alt=" " style={{ width: "40px", height: "40px"}} />
+            <img
+              src={category.icon}
+              alt=" "
+              style={{ width: "40px", height: "40px" }}
+            />
           </Grid>
           <Grid item xs={12} sm={10}>
-            <Typography className={classes.heading}>
-                {category.name} 
-              
-            </Typography>
+            <Typography className={classes.heading}>{category.name}</Typography>
           </Grid>
           <Grid item xs={12} sm={1}>
-            <AccordionSummary 
-              expandIcon={<ArrowForwardIosIcon  />}
+            <AccordionSummary
+              expandIcon={<ArrowForwardIosIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
             ></AccordionSummary>
           </Grid>
         </Grid>
-    
-      </Link>      
+      </Link>
     </>
   );
 }

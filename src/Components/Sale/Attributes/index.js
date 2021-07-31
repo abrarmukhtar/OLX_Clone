@@ -5,8 +5,9 @@ import Photos from "./Photos";
 import Location from "./Location";
 import UserDetail from "./UDetail";
 import { useAuth } from "../../../contexts/AuthContext";
+import { database } from "../../../firebase";
 
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 
 export default function Attributes() {
   const { currentUser } = useAuth();
@@ -15,13 +16,14 @@ export default function Attributes() {
   const initCombined = {
     adTitle: "",
     description: "",
-    price: 0,
+    price: "",
     uName: "",
-    phNumber: 0,
+    phNumber: "",
     state: "",
     city: "",
     neighbour: "",
-    userId: ""
+    userId: "",
+    createdAt: ""
   };
 
   const [combineDetail, setCombineDetail] = useState(initCombined);
@@ -32,10 +34,24 @@ export default function Attributes() {
     setCombineDetail({
       ...combineDetail,
       [name]: value,
-      userId: currentUser ? currentUser.uid : ""
+      userId: currentUser ? currentUser.uid : "",
+      createdAt: database.getCurrentTimestamp()
     });
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    database.category
+      .doc("CxE4WJxLQ2FFQCVBqsn4")
+      .collection("PostSubTypes")
+      .doc("MobilPh")
+      .collection("ads")
+      .add(combineDetail);
+
+    // console.log(combineDetail);
+    setCombineDetail(initCombined);
+  };
   return (
     <>
       <Container
@@ -52,7 +68,7 @@ export default function Attributes() {
               border: "1px solid black"
             }}
           >
-            <Detail getData={handleCombined} />
+            <Detail getData={handleCombined} initData={combineDetail} />
           </Row>
           <Row
             style={{
@@ -60,7 +76,7 @@ export default function Attributes() {
               border: "1px solid black"
             }}
           >
-            <Price getData={handleCombined} />
+            <Price getData={handleCombined} initData={combineDetail} />
           </Row>
           <Row
             style={{
@@ -68,7 +84,7 @@ export default function Attributes() {
               border: "1px solid black"
             }}
           >
-            <Location getData={handleCombined} />
+            <Location getData={handleCombined} initData={combineDetail} />
           </Row>
           <Row
             style={{
@@ -76,7 +92,7 @@ export default function Attributes() {
               border: "1px solid black"
             }}
           >
-            <UserDetail getData={handleCombined} />
+            <UserDetail getData={handleCombined} initData={combineDetail} />
           </Row>
           <Row
             style={{
@@ -84,7 +100,7 @@ export default function Attributes() {
               border: "1px solid black"
             }}
           >
-            <Button> Post New </Button>
+            <Button onClick={handleSubmit}> Post New </Button>
           </Row>
         </Col>
         {/* <Photos /> */}

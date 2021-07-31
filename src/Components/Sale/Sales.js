@@ -12,20 +12,16 @@ import SubCategory from "./SubCategory";
 import { UseStyles } from "./style";
 import { database } from "../../firebase";
 import SalesCenteredContainer from "./SalesCenteredContainer";
-
-
-
-
+import AddPostForm from "./Attributes";
+import { useHistory } from "react-router-dom";
 
 export default function Sales() {
   const [cate, setCate] = useState([]);
   const [subCate, setSubCate] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const history = useHistory();
 
-
-  const getDataByCat = (id)=>{
-
-
-
+  const getDataByCat = (id) => {
     database.category.onSnapshot((cateSnap) => {
       //This is categories query
 
@@ -36,36 +32,35 @@ export default function Sales() {
           .doc(id)
           .collection("PostSubTypes")
           .onSnapshot((snp) => {
-            
             setSubCate([...snp.docs.map(database.formatDoc)]);
           });
       });
     });
-  }
+  };
 
+  const getSubCate = (row) => {
+    console.log(row);
+    setShowForm(true);
+  };
 
   useEffect(() => {
     database.category.onSnapshot((cateSnap) => {
-      
-      
       //This is categories query
-
 
       setCate(cateSnap.docs.map(database.formatDoc));
 
-      // this is code for set SubCetogries 
+      // this is code for set SubCetogries
       // cateSnap.docs.map((catDoc) => {
       //   database.category
       //     .doc(catDoc.id)
       //     .collection("PostSubTypes")
       //     .onSnapshot((snp) => {
-            
+
       //       setSubCate([...snp.docs.map(database.formatDoc)]);
       //     });
       // });
     });
   }, []);
-
 
   // console.log(subCate);
 
@@ -98,7 +93,7 @@ export default function Sales() {
                       {
                         <TableRow>
                           <TableCell align="left">
-                            <Category category={row} getId ={getDataByCat}/>
+                            <Category category={row} getId={getDataByCat} />
                           </TableCell>
                         </TableRow>
                       }
@@ -121,7 +116,7 @@ export default function Sales() {
                       {
                         <TableRow>
                           <TableCell align="left">
-                            <SubCategory row={row} />
+                            <SubCategory row={row} getSubCate={getSubCate} />
                           </TableCell>
                         </TableRow>
                       }
@@ -132,6 +127,7 @@ export default function Sales() {
           </Grid>
         </Grid>
       </div>
+      {showForm && <AddPostForm />}
     </SalesCenteredContainer>
   );
 }
