@@ -5,39 +5,36 @@ import Photos from "./Photos";
 import Location from "./Location";
 import UserDetail from "./UDetail";
 import { useAuth } from "../../../contexts/AuthContext";
+
 import { Container, Row, Col, Button } from "react-bootstrap";
-import Sales from "../Sales";
 
 export default function Attributes() {
   const { currentUser } = useAuth();
 
   //this is for Details
-  const initState = { adTitle: "", description: "" };
+  const initCombined = {
+    adTitle: "",
+    description: "",
+    price: 0,
+    uName: "",
+    phNumber: 0,
+    state: "",
+    city: "",
+    neighbour: "",
+    userId: ""
+  };
 
-  const [detail, setDetail] = useState(initState);
+  const [combineDetail, setCombineDetail] = useState(initCombined);
 
-  const handleDetail = (e) => {
+  const handleCombined = (e) => {
     // console.log(e.target.name);
     const { name, value } = e.target;
-    setDetail({
-      ...detail,
-      [name]: value
+    setCombineDetail({
+      ...combineDetail,
+      [name]: value,
+      userId: currentUser ? currentUser.uid : ""
     });
   };
-  // this is for geting price code
-  const initPrice = { price: 0 };
-
-  const [price, setPrice] = useState(initPrice);
-
-  const handlePrice = (e) => {
-    // console.log(e.target.name);
-    const { name, value } = e.target;
-    setPrice({
-      ...price,
-      [name]: value
-    });
-  };
-  // console.log(price);
 
   return (
     <>
@@ -55,7 +52,7 @@ export default function Attributes() {
               border: "1px solid black"
             }}
           >
-            <Detail getData={handleDetail} />
+            <Detail getData={handleCombined} />
           </Row>
           <Row
             style={{
@@ -63,7 +60,7 @@ export default function Attributes() {
               border: "1px solid black"
             }}
           >
-            <Price getData={handlePrice} />
+            <Price getData={handleCombined} />
           </Row>
           <Row
             style={{
@@ -71,7 +68,7 @@ export default function Attributes() {
               border: "1px solid black"
             }}
           >
-            <Location />
+            <Location getData={handleCombined} />
           </Row>
           <Row
             style={{
@@ -79,7 +76,7 @@ export default function Attributes() {
               border: "1px solid black"
             }}
           >
-            <UserDetail />
+            <UserDetail getData={handleCombined} />
           </Row>
           <Row
             style={{
