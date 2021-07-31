@@ -1,29 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form } from "react-bootstrap";
 
-export default function Detail() {
-  const initState = { addTitle: "", description: "" };
-
-  const [detail, setDetail] = useState(initState);
-
-  const handleChange = (e) => {
-    // console.log(e.target.name);
-    const { name, value } = e.target;
-    setDetail( {
-      ...detail, [name]:value
-    })
-    
-  
-
-  console.log(detail);
-
+export default function Detail({ getData }) {
   return (
     <>
       <h3> INCLUDE SOME DETAILS</h3>
-      <Form>
+      <Form autoComplete="off">
         <Form.Group className="mb-2">
           <Form.Label>Ad title</Form.Label>
-          <Form.Control type="text" name="adTitle" onChange={handleChange} />
+          <Form.Control type="text" name="adTitle" onChange={getData} />
           Mention the key features of your item (e.g. brand, model, age, type)
         </Form.Group>
         <br />
@@ -33,7 +18,7 @@ export default function Detail() {
             as="textarea"
             rows={3}
             name="description"
-            onChange={handleChange}
+            onChange={getData}
           />
         </Form.Group>
       </Form>
