@@ -5,7 +5,7 @@ import Photos from "./Photos";
 import Location from "./Location";
 import UserDetail from "./UDetail";
 import { useAuth } from "../../../contexts/AuthContext";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 
 export default function Attributes() {
   const { currentUser } = useAuth();
@@ -14,7 +14,6 @@ export default function Attributes() {
     <>
       <Container
         style={{
-          // border: "1px solid black",
           padding: "50px 10px 50px 30px",
           margin: "50px 50px 50px 50px",
           alignContent: "center"
@@ -23,7 +22,6 @@ export default function Attributes() {
         <Col xs={12}>
           <Row
             style={{
-              // margin: "10px 10px 10px 10px",
               padding: "10px 10px 10px 10px",
               border: "1px solid black"
             }}
@@ -32,7 +30,6 @@ export default function Attributes() {
           </Row>
           <Row
             style={{
-              // margin: "10px 10px 10px 10px",
               padding: "10px 10px 10px 10px",
               border: "1px solid black"
             }}
@@ -41,16 +38,30 @@ export default function Attributes() {
           </Row>
           <Row
             style={{
-              // margin: "10px 10px 10px 10px",
               padding: "10px 10px 10px 10px",
               border: "1px solid black"
             }}
           >
             <Location />
           </Row>
+          <Row
+            style={{
+              padding: "10px 10px 10px 10px",
+              border: "1px solid black"
+            }}
+          >
+            <UserDetail />
+          </Row>
+          <Row
+            style={{
+              padding: "10px 10px 10px 10px",
+              border: "1px solid black"
+            }}
+          >
+            <Button> Post New </Button>
+          </Row>
         </Col>
         {/* <Photos /> */}
-        {/* <UserDetail /> */}
       </Container>
     </>
   );
