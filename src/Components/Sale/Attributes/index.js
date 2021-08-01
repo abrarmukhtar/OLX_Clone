@@ -12,7 +12,7 @@ import { Container, Row, Col, Button, Form } from "react-bootstrap";
 
 export default function Attributes({ Category, SubCategory }) {
   const { currentUser } = useAuth();
-const history = useHistory();
+  const history = useHistory();
   const { postId } = useParams();
 
   //this is for Details
@@ -47,75 +47,64 @@ const history = useHistory();
 
   // useEffect(() => {
 
-  
-        
-        
-  
-        
-        
-  //       
-          
-          
+  //
+
   //         setCombineDetail(
-            
-              
+
   //             querySnapshot.docs
   //             .filter((doc) =>  doc.id == postId)
   //             .map(database.formatDocWOId)[0]
-              
+
   //         ,[postId]
   //           )
-       
-  useEffect(()=>{
-  if (!currentUser) return;
-        
-        if(!postId) return;
-      const subc = database.collectGp.where("userId", "==", currentUser.uid);
-      subc.onSnapshot((querySnapshot) => {
 
-        setCombineDetail(querySnapshot.docs.filter((doc)=>doc.id === postId).map(database.formatDocWOId)[0])
-      })
+  useEffect(() => {
+    if (!currentUser) return;
 
-  },[])
+    if (!postId) return;
 
-
+    const subc = database.collectGp.where("userId", "==", currentUser.uid);
+    subc.onSnapshot((querySnapshot) => {
+      setCombineDetail(
+        querySnapshot.docs
+          .filter((doc) => doc.id === postId)
+          .map(database.formatDocWOId)[0]
+      );
+    });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if(postId)
-    {
-
+    if (postId) {
       const upd = database.collectGp.where("userId", "==", currentUser.uid);
-      
+
       upd.get().then((snapshot) => {
         snapshot.docs.map((snap) => {
           if (database.formatDoc(snap).id === postId) {
-            
             // console.log(database.formatDocWOId(snap));
             // console.log(combineDetail);
-            snap.ref.update(combineDetail)
+            snap.ref.update(combineDetail);
           }
-          
         });
       });
-       
-      history.push('/');
-    }else{
 
+      setCombineDetail(initCombined);
+      history.push("/");
+    } else {
       database.category
-      .doc(Category.id)
-      .collection("PostSubTypes")
-      .doc(SubCategory.id)
-      .collection("ads")
-      .add(combineDetail);
-      
+        .doc(Category.id)
+        .collection("PostSubTypes")
+        .doc(SubCategory.id)
+        .collection("ads")
+        .add(combineDetail);
+
       // console.log(combineDetail);
       setCombineDetail(initCombined);
     }
-    };
-    
-    return (
+  };
+
+  return (
     <>
       <Container
         style={{

@@ -3,7 +3,7 @@ import { database } from "../../../firebase";
 import { Card, Button } from "react-bootstrap";
 import {useHistory} from 'react-router-dom'
 export default function MyAds({ ads }) {
-  console.log(ads);
+  
 
   const history = useHistory();
   
