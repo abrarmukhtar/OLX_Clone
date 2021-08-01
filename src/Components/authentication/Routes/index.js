@@ -24,7 +24,6 @@ export default function Routes() {
           <Route exact path="/" component={AdsList} />
           <Route exact path="/sale" component={Sale} />
           <Route exact path="/attributes" component={Attributes} />
-          <Route exact path="/edit/:postId" component={Attributes} />
 
           {/* Profile */}
           <Route path="/user" component={Profile} />
@@ -34,6 +33,8 @@ export default function Routes() {
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
           <Route path="/forgot-password" component={ForgotPassword} />
+          <Route exact path="/:myads" component={AdsList} />
+          <Route exact path="/edit/:postId" component={Attributes} />
         </Switch>
       </AuthProvider>
     </>

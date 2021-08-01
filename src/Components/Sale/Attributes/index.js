@@ -15,6 +15,9 @@ export default function Attributes({ Category, SubCategory }) {
   const history = useHistory();
   const { postId } = useParams();
 
+  
+
+
   //this is for Details
   const initCombined = {
     adTitle: "",
@@ -43,20 +46,6 @@ export default function Attributes({ Category, SubCategory }) {
     });
   };
 
-  //this use to get data using params parameters
-
-  // useEffect(() => {
-
-  //
-
-  //         setCombineDetail(
-
-  //             querySnapshot.docs
-  //             .filter((doc) =>  doc.id == postId)
-  //             .map(database.formatDocWOId)[0]
-
-  //         ,[postId]
-  //           )
 
   useEffect(() => {
     if (!currentUser) return;
@@ -82,15 +71,13 @@ export default function Attributes({ Category, SubCategory }) {
       upd.get().then((snapshot) => {
         snapshot.docs.map((snap) => {
           if (database.formatDoc(snap).id === postId) {
-            // console.log(database.formatDocWOId(snap));
-            // console.log(combineDetail);
             snap.ref.update(combineDetail);
           }
         });
       });
 
       setCombineDetail(initCombined);
-      history.push("/");
+      history.push("/myads");
     } else {
       database.category
         .doc(Category.id)
@@ -99,7 +86,7 @@ export default function Attributes({ Category, SubCategory }) {
         .collection("ads")
         .add(combineDetail);
 
-      // console.log(combineDetail);
+
       setCombineDetail(initCombined);
     }
   };
