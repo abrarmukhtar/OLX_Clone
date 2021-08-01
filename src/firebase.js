@@ -23,6 +23,9 @@ export const database ={
   formatDoc: doc =>{
     return {id:doc.id, ...doc.data()}
   } ,
+  formatDocWOId: doc =>{
+    return {...doc.data()}
+  },
   getCurrentTimestamp: firebase.firestore.FieldValue.serverTimestamp,
 }
 export const storage = app.storage();

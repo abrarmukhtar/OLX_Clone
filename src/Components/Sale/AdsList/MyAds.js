@@ -1,9 +1,12 @@
 import React from "react";
 import { database } from "../../../firebase";
 import { Card, Button } from "react-bootstrap";
-
+import {useHistory} from 'react-router-dom'
 export default function MyAds({ ads }) {
   console.log(ads);
+
+  const history = useHistory();
+  
 
   return (
     <>
@@ -17,7 +20,7 @@ export default function MyAds({ ads }) {
           <div>{ads.state}</div>
           <div>{ads.city}</div>
           <div>{ads.neighbour}</div>
-          <div> <Button>Edit</Button></div>
+          <div> <Button onClick ={()=> history.push(`/edit/${ads.id}`)}>Edit</Button></div>
           {/* {ads.createdAt} */}
         </div>
       </div>
