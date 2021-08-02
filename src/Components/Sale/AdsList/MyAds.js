@@ -1,10 +1,14 @@
 import React from "react";
 import { database } from "../../../firebase";
-import { Card, Button } from "react-bootstrap";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import Paper from "@material-ui/core/Paper";
-
+import IconButton from "@material-ui/core/IconButton";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import { useHistory } from "react-router-dom";
 import { useStyles } from "./MyAdsStyle";
 
@@ -17,32 +21,71 @@ export default function MyAds({ ads, noEdit }) {
       <div className={classes.root}>
         <Container maxWidth="xl">
           <Grid container spacing={0}>
+            <Grid item xs={1} className={classes.addDate} sm={1}>
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                className={classes.fromDate}
+              >
+                From: July 31, 21
+              </Typography>
+              <Typography variant="subtitle2" gutterBottom>
+                To Aug 30, 21
+              </Typography>
+            </Grid>
+            <Grid item xs={2} sm={2}>
+              <Typography
+                variant="h6"
+                gutterBottom
+                className={classes.adTitleHeding}
+              >
+                {ads.adTitle}
+              </Typography>
 
-            
-            <Grid item xs={2} sm={2}>
-              <Paper className={classes.paper}>From: July 31, 21</Paper>
-              <Paper className={classes.paper}>To Aug 30, 21</Paper>
+              <Typography
+                variant="subtitle2"
+                gutterBottom
+                className={classes.adViewFavourite}
+              >
+                <VisibilityIcon />
+                View | <FavoriteIcon /> Likes
+              </Typography>
             </Grid>
             <Grid item xs={2} sm={2}>
-              <Paper className={classes.paper}>{ads.adTitle}</Paper>
-              <Paper className={classes.paper}>View</Paper>
+              <Typography
+                variant="h6"
+                gutterBottom
+                className={classes.adTitleHeding}
+              >
+                Rs, {ads.price}
+              </Typography>
             </Grid>
             <Grid item xs={2} sm={2}>
-              <Paper className={classes.paper}>Rs, {ads.price}</Paper>
-              <Paper className={classes.paper}>Like</Paper>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.btnActive}
+              >
+                Active
+              </Button>
             </Grid>
             <Grid item xs={2} sm={2}>
-              <Paper className={classes.paper}>Active</Paper>
-            </Grid>
-            <Grid item xs={2} sm={2}>
-              <Paper className={classes.paper}>
+              <Typography
+                variant="subtitle1"
+                gutterBottom
+                className={classes.adTitleHeding}
+              >
                 This Ad is currently live.
-              </Paper>
+              </Typography>
             </Grid>
-            <Grid item xs={2} sm={2}>
-              <Paper className={classes.paper}>....</Paper>
-              <Paper className={classes.paper}>See Full Ad View</Paper>
-
+            <Grid item xs={3} sm={3}>
+              <IconButton aria-label="settings">
+                <MoreHorizIcon />
+              </IconButton>
+              <br />
+              <Button variant="outlined" color="primary">
+                Sell Faster Now
+              </Button>
             </Grid>
           </Grid>
         </Container>
@@ -60,7 +103,6 @@ export default function MyAds({ ads, noEdit }) {
           <div>{ads.neighbour}</div>
           {noEdit && (
             <div>
-              {" "}
               <Button onClick={() => history.push(`/edit/${ads.id}`)}>
                 Edit
               </Button>
