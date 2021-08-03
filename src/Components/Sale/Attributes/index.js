@@ -15,9 +15,6 @@ export default function Attributes({ Category, SubCategory }) {
   const history = useHistory();
   const { postId } = useParams();
 
-  
-
-
   //this is for Details
   const initCombined = {
     adTitle: "",
@@ -29,7 +26,7 @@ export default function Attributes({ Category, SubCategory }) {
     city: "",
     neighbour: "",
     userId: "",
-    createdAt: "",
+    createdAt: ""
   };
 
   const [combineDetail, setCombineDetail] = useState(initCombined);
@@ -42,10 +39,9 @@ export default function Attributes({ Category, SubCategory }) {
       ...combineDetail,
       [name]: value,
       userId: currentUser ? currentUser.uid : "",
-      createdAt: database.getCurrentTimestamp(),
+      createdAt: database.getCurrentTimestamp()
     });
   };
-
 
   useEffect(() => {
     if (!currentUser) return;
@@ -86,7 +82,6 @@ export default function Attributes({ Category, SubCategory }) {
         .collection("ads")
         .add(combineDetail);
 
-
       setCombineDetail(initCombined);
     }
   };
@@ -97,7 +92,7 @@ export default function Attributes({ Category, SubCategory }) {
         style={{
           padding: "50px 10px 50px 30px",
           margin: "50px 50px 50px 50px",
-          alignContent: "center",
+          alignContent: "center"
         }}
       >
         <Col xs={12}>
@@ -106,7 +101,7 @@ export default function Attributes({ Category, SubCategory }) {
           <Row
             style={{
               padding: "10px 10px 10px 10px",
-              border: "1px solid black",
+              border: "1px solid black"
             }}
           >
             <Detail getData={handleCombined} initData={combineDetail} />
@@ -114,7 +109,7 @@ export default function Attributes({ Category, SubCategory }) {
           <Row
             style={{
               padding: "10px 10px 10px 10px",
-              border: "1px solid black",
+              border: "1px solid black"
             }}
           >
             <Price getData={handleCombined} initData={combineDetail} />
@@ -122,7 +117,7 @@ export default function Attributes({ Category, SubCategory }) {
           <Row
             style={{
               padding: "10px 10px 10px 10px",
-              border: "1px solid black",
+              border: "1px solid black"
             }}
           >
             <Location getData={handleCombined} initData={combineDetail} />
@@ -130,7 +125,7 @@ export default function Attributes({ Category, SubCategory }) {
           <Row
             style={{
               padding: "10px 10px 10px 10px",
-              border: "1px solid black",
+              border: "1px solid black"
             }}
           >
             <UserDetail getData={handleCombined} initData={combineDetail} />
@@ -138,7 +133,7 @@ export default function Attributes({ Category, SubCategory }) {
           <Row
             style={{
               padding: "10px 10px 10px 10px",
-              border: "1px solid black",
+              border: "1px solid black"
             }}
           >
             <Button onClick={handleSubmit}>
