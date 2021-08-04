@@ -14,7 +14,6 @@ import { database } from "../../firebase";
 import SalesCenteredContainer from "./SalesCenteredContainer";
 import AddPostForm from "./Attributes";
 import { useHistory } from "react-router-dom";
-import Photos from '../Sale/Attributes/Photos'
 
 export default function Sales() {
   const [cate, setCate] = useState([]);
@@ -128,7 +127,6 @@ export default function Sales() {
                         <TableRow>
                           <TableCell align="left">
                             <SubCategory row={row} getSubCate={getSubCate} />
-                            
                           </TableCell>
                         </TableRow>
                       }
@@ -136,15 +134,12 @@ export default function Sales() {
                   </Table>
                 ))}
             </TableContainer>
-           
           </Grid>
         </Grid>
-        <Photos />
       </div>
       {showForm && (
         <AddPostForm Category={selectedCate} SubCategory={selectedSubCate} />
       )}
     </SalesCenteredContainer>
-    
   );
 }

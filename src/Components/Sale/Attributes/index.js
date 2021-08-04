@@ -6,6 +6,7 @@ import Location from "./Location";
 import UserDetail from "./UDetail";
 import { useAuth } from "../../../contexts/AuthContext";
 import { database } from "../../../firebase";
+
 import { useParams, useHistory } from "react-router";
 
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
@@ -128,6 +129,14 @@ export default function Attributes({ Category, SubCategory }) {
               border: "1px solid black"
             }}
           >
+            <Photos />
+          </Row>
+          <Row
+            style={{
+              padding: "10px 10px 10px 10px",
+              border: "1px solid black"
+            }}
+          >
             <UserDetail getData={handleCombined} initData={combineDetail} />
           </Row>
           <Row
@@ -141,7 +150,6 @@ export default function Attributes({ Category, SubCategory }) {
             </Button>
           </Row>
         </Col>
-        {/* <Photos /> */}
       </Container>
     </>
   );
