@@ -16,11 +16,13 @@ export const useStyles = makeStyles((theme) => ({
   // },
   input: {
     display: "none"
+    
   },
   img: {
     height: "100px",
     width: "100px",
-    border: "1px solid black"
+    //  border: "1px solid black"
+    outlineColor: "coral"
   },
   paper: {
     padding: theme.spacing(3),
