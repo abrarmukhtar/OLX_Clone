@@ -60,7 +60,7 @@ export default function Photos() {
 
           {imagesData.length > 0
             ? imagesData.map((arr, index) => {
-                if (index === 9) {
+                if (index === 10) {
                   return (
                     <>
                       <br />
