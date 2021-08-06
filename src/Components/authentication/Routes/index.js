@@ -11,8 +11,8 @@ import UpdateProfile from "../UpdateProfile";
 import Home from "../Home";
 import Sale from "../../Sale/Sales";
 import Attributes from "../../Sale/Attributes";
-import AdsList from '../../Sale/AdsList'
-
+import AdsList from "../../Sale/AdsList";
+import Photos from "../../Sale/Attributes/Photos";
 
 export default function Routes() {
   return (
@@ -21,7 +21,8 @@ export default function Routes() {
         <Switch>
           {/* Drive */}
           {/* <Route exact path="/" component={Home} /> */}
-          <Route exact path="/" component={AdsList} />
+          <Route exact path="/" component={Photos} />
+          <Route exact path="/adslist" component={AdsList} />
           <Route exact path="/sale" component={Sale} />
           <Route exact path="/attributes" component={Attributes} />
 

@@ -17,6 +17,11 @@ export const useStyles = makeStyles((theme) => ({
   input: {
     display: "none"
   },
+  img: {
+    height: "100px",
+    width: "100px",
+    border: "1px solid black"
+  },
   paper: {
     padding: theme.spacing(3),
     textAlign: "center",

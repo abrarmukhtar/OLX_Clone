@@ -1,54 +1,79 @@
-import React from "react";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+import React, { useState } from "react";
 import { useStyles } from "./style";
 import { Container, Typography } from "@material-ui/core";
+import Images from "./Images";
 
 export default function Photos() {
   const classes = useStyles();
 
+  const maxData = 18;
+
+  const imagesData = [
+    // "https://picsum.photos/200/300",
+    // "https://picsum.photos/200/300",
+    // "https://picsum.photos/200/300",
+    // "https://picsum.photos/200/300",
+    // "https://picsum.photos/200/300",
+    // "https://picsum.photos/200/300",
+    // "https://picsum.photos/200/300",
+    // "https://picsum.photos/200/300",
+    // "https://picsum.photos/200/300",
+    // "https://picsum.photos/200/300",
+    // "https://picsum.photos/200/300",
+    // "https://picsum.photos/200/300",
+    // "https://picsum.photos/200/300",
+    // "https://picsum.photos/200/300"
+
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+  ];
   return (
-    <div htmlFor="click">
+    <div htmlFor="click" style={{ border: "1px solid black" }}>
       <Container maxWidth="xl" className={classes.parentContainer}>
         <Typography variant="h6" className={classes.PhotosHeading}>
           UPLOAD UP TO 10 PHOTOS
         </Typography>
       </Container>
-      <Container className={classes.root} maxWidth="xl">
-        <Grid item xs={2} sm={1}>
-          <Paper
-            className={classes.paper}
-            variant="outlined"
-            style={{ border: "1px solid black" }}
-          >
-            <label>
-              click mi
-              <input type="file" id="click" className={classes.input} />
-              <AddAPhotoIcon htmlFor="icon-button-file">
-                <IconButton
-                  color="primary"
-                  aria-label="upload picture"
-                  component="span"
-                >
-                  {/* <input
-                  accept="image/*"
-                  // className={classes.input}
-                  id="icon-button-file"
-                  type="file"
-                /> */}
-                  {/* <IconButton
-                  color="primary"
-                  aria-label="upload picture"
-                  component="span"
-                /> */}
-                </IconButton>
-              </AddAPhotoIcon>
-            </label>
-          </Paper>
-        </Grid>
-      </Container>
+      <label
+        style={{ width: "100%", height: "250px", border: "1px solid black" }}
+      >
+        <Container className={classes.root} maxWidth="xl">
+          <input type="file" id="click" className={classes.input} />
+
+          {imagesData.length > 0
+            ? imagesData.map((arr, index) => {
+                if (index === 9) {
+                  return (
+                    <>
+                      <br />
+                      <Images key={index} imgSrc={arr} />;
+                    </>
+                  );
+                } else {
+                  return <Images key={index} imgSrc={arr} />;
+                }
+              })
+            : ""}
+        </Container>
+      </label>
     </div>
   );
 }
