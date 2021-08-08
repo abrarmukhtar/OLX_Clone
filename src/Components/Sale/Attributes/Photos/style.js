@@ -10,6 +10,10 @@ export const useStyles = makeStyles((theme) => ({
   parentContainer: {
     //   backgroundColor:"Green",
   },
+  lis: {
+    display: "inline"
+  }
+  ,
   // PhotosHeading: {
   //   marginTop: "10px",
   //   marginBottom: "15px"
