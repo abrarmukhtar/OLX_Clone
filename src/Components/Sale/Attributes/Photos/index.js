@@ -28,7 +28,12 @@ export default function Photos() {
       thumb:
         "https://firebasestorage.googleapis.com/v0/b/new-project-b8582.appspot.com/o/addPhotoImage.JPG?alt=media&token=3fd708d1-8b27-4bf4-a8ab-302bac3df06b"
     },
-    { id: "2", name: "cover", thumb: "" },
+    {
+      id: "2",
+      name: "cover",
+      thumb:
+        "https://firebasestorage.googleapis.com/v0/b/new-project-b8582.appspot.com/o/addPhotoImage.JPG?alt=media&token=3fd708d1-8b27-4bf4-a8ab-302bac3df06b"
+    },
     { id: "3", name: "cover", thumb: "" },
     { id: "4", name: "cover", thumb: "" }
   ];
@@ -63,6 +68,7 @@ export default function Photos() {
   };
 
   const handleDragEnd = (result) => {
+    if (!result.destination) return;
     const items = Array.from(uploadingFiles);
     const [reorderItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderItem);
@@ -87,11 +93,16 @@ export default function Photos() {
             accept="image/*"
           /> */}
           <DragDropContext onDragEnd={handleDragEnd}>
-            <Droppable droppableId="characters">
+            <Droppable droppableId="characters" direction="horizontal">
               {(provided) => (
-                <ul {...provided.droppableProps} ref={provided.innerRef}>
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  style={{ border: "1px solid black", display: "flex" }}
+                >
                   {uploadingFiles.map((arr, index) => {
                     // console.log(arr);
+
                     return (
                       <Draggable
                         key={arr.id}
@@ -99,22 +110,21 @@ export default function Photos() {
                         index={index}
                       >
                         {(provided) => (
-                          <li
-                            className={classes.lis}
+                          // <li>
+                          <div
                             {...provided.draggableProps}
                             ref={provided.innerRef}
                             {...provided.dragHandleProps}
                           >
-                            <div>
-                              <Images imgSrc={arr.thumb} />
-                            </div>
-                          </li>
+                            <Images imgSrc={arr.thumb} />
+                          </div>
+                          // </li>
                         )}
                       </Draggable>
                     );
                   })}
                   {provided.placeholder}
-                </ul>
+                </div>
               )}
             </Droppable>
           </DragDropContext>
