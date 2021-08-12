@@ -9,9 +9,7 @@ export default function App() {
   return (
     <>
     <Navbar />
-    <div>
-      tet
-    </div>
+   
     </>
   );
 }

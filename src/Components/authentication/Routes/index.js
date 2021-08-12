@@ -21,7 +21,7 @@ export default function Routes() {
         <Switch>
           {/* Drive */}
           {/* <Route exact path="/" component={Home} /> */}
-          {/* <Route exact path="/" component={Photos} /> */}
+          <Route exact path="/" component={Photos} />
           <Route exact path="/adslist" component={AdsList} />
           <Route exact path="/sale" component={Sale} />
           <Route exact path="/attributes" component={Attributes} />
