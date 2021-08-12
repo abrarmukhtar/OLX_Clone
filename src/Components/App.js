@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Navbar from './authentication/Navbar'
+import Navbar from "./authentication/Navbar";
 
 export default function App() {
   
