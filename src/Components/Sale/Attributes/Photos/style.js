@@ -14,6 +14,16 @@ export const useStyles = makeStyles((theme) => ({
   //   marginTop: "10px",
   //   marginBottom: "15px"
   // },
+  
+  divs: {
+    float: "left",
+    width: "200px",
+    height: "80px",
+    margin: "10px",
+    padding: "10px",
+    border: "1px solid black"
+  }
+  ,
   input: {
     display: "none"
     

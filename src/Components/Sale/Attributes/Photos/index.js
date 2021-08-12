@@ -15,26 +15,26 @@ export default function Photos() {
   //   };
   // }, []);
 
-  useEffect(() => {
-    window.addEventListener("beforeunload", alertUser);
-    window.addEventListener("unload", handleTabClosing);
-    return () => {
-      window.removeEventListener("beforeunload", alertUser);
-      window.removeEventListener("unload", handleTabClosing);
-    };
-  });
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", alertUser);
+  //   window.addEventListener("unload", handleTabClosing);
+  //   return () => {
+  //     window.removeEventListener("beforeunload", alertUser);
+  //     window.removeEventListener("unload", handleTabClosing);
+  //   };
+  // });
 
-  const handleTabClosing = () => {
-    // removePlayerFromGame();
-    // alert("clicl");
-    deleteImages();
-  };
+  // const handleTabClosing = () => {
+  //   // removePlayerFromGame();
+  //   // alert("clicl");
+  //   deleteImages();
+  // };
 
-  const alertUser = (event) => {
-    event.preventDefault();
-    event.returnValue = "";
-    deleteImages();
-  };
+  // const alertUser = (event) => {
+  //   event.preventDefault();
+  //   event.returnValue = "";
+  //   deleteImages();
+  // };
 
   // this code to delte images from storage
   const deleteImages = () => {
@@ -51,7 +51,10 @@ export default function Photos() {
   };
   const [uploadingFiles, setUploadingFiles] = useState([]);
 
-  const [urls, setUrls] = useState([]);
+  const [urls, setUrls] = useState([
+    "https://firebasestorage.googleapis.com/v0/b/new-project-b8582.appspot.com/o/images%2FVehicle.jpg?alt=media&token=59e6364f-dfcb-47c9-9644-eca40f3c3644",
+    "https://firebasestorage.googleapis.com/v0/b/new-project-b8582.appspot.com/o/images%2Fpp.jpeg?alt=media&token=6b784f72-05be-47b7-b68b-e773d0420366",
+  ]);
 
   const handleUpload = (e) => {
     const file = e.target.files[0];
@@ -60,7 +63,7 @@ export default function Photos() {
     const id = uuidV4();
     setUploadingFiles((prevUploadingFiles) => [
       ...prevUploadingFiles,
-      { id: id, name: file.name, progress: 0, error: false }
+      { id: id, name: file.name, progress: 0, error: false },
     ]);
 
     const filePath = `/images/${file.name}`;
@@ -103,33 +106,9 @@ export default function Photos() {
     );
   };
 
-  // const imagesData = [
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   "",
-  //   ""
-  // ];
-
-  // console.log(uploadingFiles);
-  console.log(urls);
   return (
     <div>
+      
       <Container maxWidth="xl" className={classes.parentContainer}>
         <Typography variant="h6" className={classes.PhotosHeading}>
           UPLOAD UP TO 10 PHOTOS

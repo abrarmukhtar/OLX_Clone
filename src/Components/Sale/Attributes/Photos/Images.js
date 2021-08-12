@@ -3,38 +3,21 @@ import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import { useStyles } from "./style";
 import { Toast, ProgressBar } from "react-bootstrap";
 export default function Photos({ imgSrc }) {
+
   const classes = useStyles();
 
-  // const [images, setImages] = useState([
 
-  // ]);
-  // console.log(imgSrc);
   return (
     <>
-      {/* <Toast key={file.id}>
-        <Toast.Header
-          className="text-truncate w-100 d-block"
-          closeButton={file.error}
-        >
-          {file.name}
-        </Toast.Header>
-        <Toast.Body>
-          <ProgressBar
-            animated={!file.error}
-            variant={file.error ? "danger" : "primary"}
-            now={file.error ? 100 : file.progress * 100}
-            label={file.error ? "Error" : `${Math.round(file.progress * 100)}%`}
-          />
-        </Toast.Body>
-      </Toast> */}
+      
       {imgSrc[0] ? (
         <img src={imgSrc[0]} alt="no data" className={classes.img} />
-      ) : (
+              ) : (
         <AddAPhotoIcon className={classes.img} />
       )}
 
       {imgSrc[1] ? (
-        <img src={imgSrc[1]} alt="no data" className={classes.img} />
+        <img src={imgSrc[1]} alt="no data" id='img1' className={classes.img}  />
       ) : (
         <AddAPhotoIcon className={classes.img} />
       )}
