@@ -11,40 +11,6 @@ export default function Photos() {
 
   const [uploadingFiles, setUploadingFiles] = useState([]);
 
-  const handleUpload = (e) => {
-    const file = e.target.files[0];
-
-    if (file == null) return;
-
-
-
-    
-    const filePath = `/images/${uploadingFiles.length}`;
-
-    const uploadTask = storage.ref(`${filePath}`).put(file);
-    
-    uploadTask.on(
-      "state_changed",
-
-      //progress code
-      (snapshot) => {
-        const progress = snapshot.bytesTransferred / snapshot.totalBytes;
-      },
-      // error code
-      () => {},
-
-      () => {
-        uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-          setUploadingFiles([
-            ...uploadingFiles,
-            { id: (uploadingFiles.length + 1).toString(), thumb: url },
-          ]);
-          e.target.value = null;
-        });
-      }
-    );
-  };
-  
   const [emptyPhoto, setEmptyPhoto] = useState([
     "",
     "",
@@ -68,19 +34,70 @@ export default function Photos() {
     "",
   ]);
 
+  const handleUpload = (e) => {
+    const file = e.target.files[0];
+
+    if (file == null) return;
+
+    const fileName = uploadingFiles.length;
+    const filePath = `/images/${fileName}`;
+
+    const uploadTask = storage.ref(`${filePath}`).put(file);
+
+    uploadTask.on(
+      "state_changed",
+
+      //progress code
+      (snapshot) => {
+        const progress = snapshot.bytesTransferred / snapshot.totalBytes;
+      },
+      // error code
+      () => {},
+
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+          setUploadingFiles([
+            ...uploadingFiles,
+            {
+              id: (uploadingFiles.length + 1).toString(),
+              fName: fileName,
+              thumb: url,
+            },
+          ]);
+          e.target.value = null;
+        });
+
+        const items = Array.from(emptyPhoto);
+        items.splice(0, 1);
+        setEmptyPhoto(items);
+      }
+    );
+  };
+
   // this code to delte images from storage
-  // const deleteImages = () => {
-  //   storage
-  //     .ref(`images/`)
-  //     .listAll()
-  //     .then((listResults) => {
-  //       const promises = listResults.items.map((item) => {
-  //         return item.delete();
-  //       });
-  //       Promise.all(promises);
-  //       setUrls([]);
-  //     });
-  // };
+  const deleteImages = (id) => {
+    const fileName = uploadingFiles.filter((arr) => arr.id === id);
+    // console.log(fileName)
+    storage
+      .ref(`images/`)
+      .listAll()
+      .then((listResults) => {
+        const promises = listResults.items.map((item) => {
+          // console.log( uploadingFiles.filter(arr=> arr.id === id)[0].fName)
+          if (
+            item.name == uploadingFiles.filter((arr) => arr.id === id)[0].fName
+          ) {
+            return item.delete();
+          }
+        });
+        Promise.all(promises);
+      });
+
+    setUploadingFiles(uploadingFiles.filter((arr) => arr.id != id));
+    const items = Array.from(emptyPhoto);
+        items.push("")
+        setEmptyPhoto(items);
+  };
 
   const getImages = () => {
     let ur = [];
@@ -94,12 +111,7 @@ export default function Photos() {
       });
   };
 
-  // useEffect(() => {
-  //   // getImages();
-  // }, []);
-
   const handleDragEnd = (result) => {
-    
     if (!result.destination) return;
     const items = Array.from(uploadingFiles);
     const [reorderItem] = items.splice(result.source.index, 1);
@@ -114,27 +126,30 @@ export default function Photos() {
           UPLOAD UP TO 10 PHOTOS
         </Typography>
       </Container>
-      <label style={{ width: "90%", height: "250px" }} htmlFor="click">
-        <Container className={classes.root} maxWidth="xl">
-          <input
-            type="file"
-            id="click"
-            className={classes.input}
-            onChange={handleUpload}
-            multiple="multiple"
-            accept="image/*"
-          />
+
+      <label style={{ width: "90%", height: "250px" }}>
+        <input
+          type="file"
+          id="click"
+          className={classes.input}
+          onChange={handleUpload}
+          multiple="multiple"
+          accept="image/*"
+        />
+        <Container
+          style={{ margin:"10px 10px 10px 100px"}}
+          htmlFor="click"
+        >
           <DragDropContext onDragEnd={handleDragEnd}>
-            <Droppable droppableId="characters" direction="horizontal">
+            
+            <Droppable droppableId="characters" maxWidth="xl">
               {(provided) => (
                 <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  style={{ display: "flex" }}
+                  style={{ display: "flex", flexWrap: "wrap", justifyContent: 'space-between' }}
                 >
                   {uploadingFiles.map((arr, index) => {
-                    
-
                     return (
                       arr.thumb !== "" && (
                         <Draggable
@@ -149,7 +164,11 @@ export default function Photos() {
                               ref={provided.innerRef}
                               {...provided.dragHandleProps}
                             >
-                              <Images key={index} imgSrc={arr.thumb} />
+                              <Images
+                                key={index}
+                                forDelete={deleteImages}
+                                imgSrc={arr}
+                              />
                             </div>
                             // </li>
                           )}
@@ -162,8 +181,8 @@ export default function Photos() {
                   {emptyPhoto.map((filtArr, index) => {
                     return (
                       <Toast
+                        style={{ width: "110px", height: "130px" }}
                         key={`${index}photo`}
-                        style={{ width: "130px", height: "150px" }}
                       >
                         <Toast.Body>
                           <AddAPhotoIcon className={classes.img} />

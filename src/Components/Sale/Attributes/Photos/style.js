@@ -10,6 +10,7 @@ export const useStyles = makeStyles((theme) => ({
   parentContainer: {
     //   backgroundColor:"Green",
   },
+
   lis: {
     display: "inline"
   }
@@ -34,7 +35,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   img: {
     height: "100px",
-    width: "100px",
+    width: "90px",
     //  border: "1px solid black"
     outlineColor: "coral"
   },
