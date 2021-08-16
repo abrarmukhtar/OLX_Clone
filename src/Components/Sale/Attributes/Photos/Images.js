@@ -1,19 +1,21 @@
 import React from "react";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
+import { Toast, Button } from "react-bootstrap";
 import { useStyles } from "./style";
-// import { Toast, ProgressBar } from "react-bootstrap";
-export default function Photos({ imgSrc }) {
 
+export default function Photos({ imgSrc }) {
   const classes = useStyles();
 
-  // console.log(imgSrc);s
+  
   return (
     <>
-      {imgSrc === "" ? (
-        <AddAPhotoIcon className={classes.img} />
-      ) : (
-        <img src={imgSrc} alt="no data" className={classes.img} />
-      )}
+      <Toast style={{ width: "130px", height: "150px" }}>
+        <Toast.Body >
+          <div>
+            <Button> X </Button>
+            <img src={imgSrc} alt="no data"  className={classes.img} />
+          </div>
+        </Toast.Body>
+      </Toast>
     </>
   );
 }

@@ -4,9 +4,69 @@ import { Container, Typography } from "@material-ui/core";
 import Images from "./Images";
 import { storage, database } from "../../../../firebase";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-
+import { Toast } from "react-bootstrap";
+import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 export default function Photos() {
   const classes = useStyles();
+
+  const [uploadingFiles, setUploadingFiles] = useState([]);
+
+  const handleUpload = (e) => {
+    const file = e.target.files[0];
+
+    if (file == null) return;
+
+
+
+    
+    const filePath = `/images/${uploadingFiles.length}`;
+
+    const uploadTask = storage.ref(`${filePath}`).put(file);
+    
+    uploadTask.on(
+      "state_changed",
+
+      //progress code
+      (snapshot) => {
+        const progress = snapshot.bytesTransferred / snapshot.totalBytes;
+      },
+      // error code
+      () => {},
+
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+          setUploadingFiles([
+            ...uploadingFiles,
+            { id: (uploadingFiles.length + 1).toString(), thumb: url },
+          ]);
+          e.target.value = null;
+        });
+      }
+    );
+  };
+  
+  const [emptyPhoto, setEmptyPhoto] = useState([
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
 
   // this code to delte images from storage
   // const deleteImages = () => {
@@ -21,56 +81,25 @@ export default function Photos() {
   //       setUrls([]);
   //     });
   // };
-  const initialData = [
-    {
-      id: "1",
-      name: "cover",
-      thumb:
-        "https://firebasestorage.googleapis.com/v0/b/new-project-b8582.appspot.com/o/addPhotoImage.JPG?alt=media&token=3fd708d1-8b27-4bf4-a8ab-302bac3df06b"
-    },
-    {
-      id: "2",
-      name: "cover",
-      thumb:
-        "https://firebasestorage.googleapis.com/v0/b/new-project-b8582.appspot.com/o/addPhotoImage.JPG?alt=media&token=3fd708d1-8b27-4bf4-a8ab-302bac3df06b"
-    },
-    { id: "3", name: "cover", thumb: "" },
-    { id: "4", name: "cover", thumb: "" }
-  ];
-  const [uploadingFiles, setUploadingFiles] = useState(initialData);
 
-  const [urls, setUrls] = useState([
-    "https://firebasestorage.googleapis.com/v0/b/new-project-b8582.appspot.com/o/images%2FVehicle.jpg?alt=media&token=59e6364f-dfcb-47c9-9644-eca40f3c3644",
-    "https://firebasestorage.googleapis.com/v0/b/new-project-b8582.appspot.com/o/images%2Fpp.jpeg?alt=media&token=6b784f72-05be-47b7-b68b-e773d0420366",
-  ]);
+  const getImages = () => {
+    let ur = [];
+    storage
+      .ref(`images/`)
+      .listAll()
+      .then((listResults) => {
+        const promises = listResults.items.map((item, index) => {});
 
-  const handleUpload = (e) => {
-    const file = e.target.files[0];
-    if (file == null) return;
-
-    const filePath = `/images/${file.name}`;
-
-    const uploadTask = storage.ref(`${filePath}`).put(file);
-    // console.log(uploadTask);
-    uploadTask.on(
-      "state_changed",
-
-      //progress code
-      (snapshot) => {
-        const progress = snapshot.bytesTransferred / snapshot.totalBytes;
-      },
-      // error code
-      () => {},
-
-      () => {
-        uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-          setUrls([...urls, url]);
-        });
-      }
-    );
+        Promise.all(promises);
+      });
   };
 
+  // useEffect(() => {
+  //   // getImages();
+  // }, []);
+
   const handleDragEnd = (result) => {
+    
     if (!result.destination) return;
     const items = Array.from(uploadingFiles);
     const [reorderItem] = items.splice(result.source.index, 1);
@@ -80,7 +109,6 @@ export default function Photos() {
   };
   return (
     <div>
-      
       <Container maxWidth="xl" className={classes.parentContainer}>
         <Typography variant="h6" className={classes.PhotosHeading}>
           UPLOAD UP TO 10 PHOTOS
@@ -88,46 +116,61 @@ export default function Photos() {
       </Container>
       <label style={{ width: "90%", height: "250px" }} htmlFor="click">
         <Container className={classes.root} maxWidth="xl">
-          {/* <input
+          <input
             type="file"
             id="click"
             className={classes.input}
             onChange={handleUpload}
             multiple="multiple"
             accept="image/*"
-          /> */}
+          />
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="characters" direction="horizontal">
               {(provided) => (
                 <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  style={{ border: "1px solid black", display: "flex" }}
+                  style={{ display: "flex" }}
                 >
                   {uploadingFiles.map((arr, index) => {
-                    // console.log(arr);
+                    
 
                     return (
-                      <Draggable
-                        key={arr.id}
-                        draggableId={arr.id}
-                        index={index}
-                      >
-                        {(provided) => (
-                          // <li>
-                          <div
-                            {...provided.draggableProps}
-                            ref={provided.innerRef}
-                            {...provided.dragHandleProps}
-                          >
-                            <Images imgSrc={arr.thumb} />
-                          </div>
-                          // </li>
-                        )}
-                      </Draggable>
+                      arr.thumb !== "" && (
+                        <Draggable
+                          key={index}
+                          draggableId={(index + 1).toString()}
+                          index={index}
+                        >
+                          {(provided) => (
+                            // <li>
+                            <div
+                              {...provided.draggableProps}
+                              ref={provided.innerRef}
+                              {...provided.dragHandleProps}
+                            >
+                              <Images key={index} imgSrc={arr.thumb} />
+                            </div>
+                            // </li>
+                          )}
+                        </Draggable>
+                      )
                     );
                   })}
+
                   {provided.placeholder}
+                  {emptyPhoto.map((filtArr, index) => {
+                    return (
+                      <Toast
+                        key={`${index}photo`}
+                        style={{ width: "130px", height: "150px" }}
+                      >
+                        <Toast.Body>
+                          <AddAPhotoIcon className={classes.img} />
+                        </Toast.Body>
+                      </Toast>
+                    );
+                  })}
                 </div>
               )}
             </Droppable>
