@@ -11,6 +11,7 @@ export default function Photos() {
 
   const [uploadingFiles, setUploadingFiles] = useState([]);
 
+  const [isDelete, setIsDelete] = useState(true);
   const [emptyPhoto, setEmptyPhoto] = useState([
     "",
     "",
@@ -35,6 +36,7 @@ export default function Photos() {
   ]);
 
   const handleUpload = (e) => {
+    
     const file = e.target.files[0];
 
     if (file == null) return;
@@ -56,6 +58,9 @@ export default function Photos() {
 
       () => {
         uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+          const items = Array.from(emptyPhoto);
+          items.splice(0, 1);
+          setEmptyPhoto(items);
           setUploadingFiles([
             ...uploadingFiles,
             {
@@ -66,10 +71,6 @@ export default function Photos() {
           ]);
           e.target.value = null;
         });
-
-        const items = Array.from(emptyPhoto);
-        items.splice(0, 1);
-        setEmptyPhoto(items);
       }
     );
   };
@@ -95,8 +96,9 @@ export default function Photos() {
 
     setUploadingFiles(uploadingFiles.filter((arr) => arr.id != id));
     const items = Array.from(emptyPhoto);
-        items.push("")
-        setEmptyPhoto(items);
+    items.push("");
+    setEmptyPhoto(items);
+    
   };
 
   const getImages = () => {
@@ -128,26 +130,27 @@ export default function Photos() {
       </Container>
 
       <label style={{ width: "90%", height: "250px" }}>
-        <input
-          type="file"
-          id="click"
-          className={classes.input}
-          onChange={handleUpload}
-          multiple="multiple"
-          accept="image/*"
-        />
-        <Container
-          style={{ margin:"10px 10px 10px 100px"}}
-          htmlFor="click"
-        >
+        <Container style={{ margin: "10px 10px 10px 100px" }}>
+          <input
+            type="file"
+            id="click"
+            className={classes.input}
+            onChange={handleUpload}
+            multiple="multiple"
+            accept="image/*"
+          />
+
           <DragDropContext onDragEnd={handleDragEnd}>
-            
             <Droppable droppableId="characters" maxWidth="xl">
               {(provided) => (
                 <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  style={{ display: "flex", flexWrap: "wrap", justifyContent: 'space-between' }}
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: "space-between",
+                  }}
                 >
                   {uploadingFiles.map((arr, index) => {
                     return (
@@ -158,7 +161,6 @@ export default function Photos() {
                           index={index}
                         >
                           {(provided) => (
-                            // <li>
                             <div
                               {...provided.draggableProps}
                               ref={provided.innerRef}
@@ -170,7 +172,6 @@ export default function Photos() {
                                 imgSrc={arr}
                               />
                             </div>
-                            // </li>
                           )}
                         </Draggable>
                       )
@@ -181,11 +182,21 @@ export default function Photos() {
                   {emptyPhoto.map((filtArr, index) => {
                     return (
                       <Toast
-                        style={{ width: "110px", height: "130px" }}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          width: "110px",
+                          height: "110px",
+                          margin: "0px",
+                          padding: "0px",
+                        }}
                         key={`${index}photo`}
                       >
                         <Toast.Body>
-                          <AddAPhotoIcon className={classes.img} />
+                          <AddAPhotoIcon
+                            style={{ width: "40px", height: "40px" }}
+                          />
                         </Toast.Body>
                       </Toast>
                     );
