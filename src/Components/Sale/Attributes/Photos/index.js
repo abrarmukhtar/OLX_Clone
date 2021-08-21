@@ -6,7 +6,7 @@ import { storage, database } from "../../../../firebase";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { Toast } from "react-bootstrap";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
-export default function Photos() {
+export default function Photos( { getData, initData }) {
   const classes = useStyles();
 
   const [uploadingFiles, setUploadingFiles] = useState([]);
@@ -73,6 +73,7 @@ export default function Photos() {
         });
       }
     );
+    
   };
 
   // this code to delte images from storage
@@ -129,8 +130,9 @@ export default function Photos() {
         </Typography>
       </Container>
 
-      <label style={{ width: "90%", height: "250px" }}>
-        <Container style={{ margin: "10px 10px 10px 100px" }}>
+      <label style={{ width: "100%", height: "250px" }}>
+        <Container  >
+        {/* // style={{ margin: "10px 10px 10px 100px" }}> */}
           <input
             type="file"
             id="click"
@@ -186,8 +188,8 @@ export default function Photos() {
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          width: "110px",
-                          height: "110px",
+                          width: "100px",
+                          height: "100px",
                           margin: "0px",
                           padding: "0px",
                         }}

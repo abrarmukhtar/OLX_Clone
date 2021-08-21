@@ -27,6 +27,7 @@ export default function Attributes({ Category, SubCategory }) {
     city: "",
     neighbour: "",
     userId: "",
+    
     createdAt: ""
   };
 
@@ -129,7 +130,7 @@ export default function Attributes({ Category, SubCategory }) {
               border: "1px solid black"
             }}
           >
-            <Photos />
+            <Photos getData={handleCombined} initData={combineDetail}/>
           </Row>
           <Row
             style={{

@@ -8,15 +8,15 @@ export default function Photos({ imgSrc, forDelete }) {
   return (
     <>
       <Toast
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "110px",
-          height: "110px",
-          margin: "0px",
-          padding: "0px",
-        }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100px",
+            height: "100px",
+            margin: "0px",
+            padding: "0px",
+          }}
       >
         <Toast.Body>
           <div>
